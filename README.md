@@ -13,6 +13,6 @@ If somone wishes to fix the issue, `SecureAlternative.py` shows an example solut
 - [Yara Rule created by Medsterr](https://github.com/medsterr/yara/tree/main/python/pickle_injector.py)
 
 ### Related Presentation
-- [DEFCON Powerpoint Version](https://coldwaterq.com/presentations/ColdwaterQ - BACKDOORING Pickles A decade only made things worse - v1.pptx)
-- [DEFCON PDF Version](https://coldwaterq.com/presentations/ColdwaterQ - BACKDOORING Pickles A decade only made things worse - v1.pdf)
-- [DEFCON Demo Gif](https://coldwaterq.com/presentations/ColdwaterQ - BACKDOORING Pickles A decade only made things worse - v1 - demo.gif)
+- [DEFCON Powerpoint Version](https://coldwaterq.com/presentations/ColdwaterQ%20-%20BACKDOORING%20Pickles%20A%20decade%20only%20made%20things%20worse%20-%20v1.pptx)
+- [DEFCON PDF Version](https://coldwaterq.com/presentations/ColdwaterQ%20-%20BACKDOORING%20Pickles%20A%20decade%20only%20made%20things%20worse%20-%20v1.pdf)
+- [DEFCON Demo Gif](https://coldwaterq.com/presentations/ColdwaterQ%20-%20BACKDOORING%20Pickles%20A%20decade%20only%20made%20things%20worse%20-%20v1%20-%20demo.gif)
