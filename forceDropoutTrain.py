@@ -55,9 +55,8 @@ while inf.tell() != os.fstat(inf.fileno()).st_size:
         print(e)
         break
 
-# pick a random opcode and inject our shellcode before it.
-# since pickle opcodes are location independent and our shellcode cleans up the stack, we can inject anywhere and it shouldn't affect a thing.
-pos, version = random.choice(locations)
+# pick the seccond location, we want it early enough to override dropout before it's used
+pos, version = locations[2]
     
 # append the version so that it is set at the end. the shell code doesn't define what it's being set back to until this point.
 payload.append(version)
