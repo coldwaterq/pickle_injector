@@ -1,5 +1,11 @@
 # pickle_injector
 
+### Denial of service
+![256gb memory usage](image.png)
+billionLaughs.pt is smaller but utilizes the dupe instruction which is disabled in some pickle parsers. billionLaughsAlt.pkl has to use roughly twice as many bytes, but both are typable on a keyboard and should cause a MemoryError on all reasonable systems.
+
+If you need to make it bigger, add `(` to the beginning, and continue the pattern between `l` at the end before the `.`
+
 ### Exploitation
 Pickles are broken, if you see one you can easilly plant a backdoor into it using the `inject.py` script.
 ```bash
